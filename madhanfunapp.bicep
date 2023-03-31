@@ -18,7 +18,7 @@ param location string = resourceGroup().location
 param runtime string = 'node'
 
 var functionAppName = 'madhantestfunapp1' 
-var storageAccountName = 'madhantestfun'
+var storageAccountName = 'madhantestfun1'
 var functionWorkerRuntime = runtime
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
   name: 'storageAccountName'
