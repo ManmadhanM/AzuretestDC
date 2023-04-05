@@ -18,19 +18,18 @@ param location string = resourceGroup().location
 param runtime string = 'node'
 
 var functionAppName = 'madhantestfunapp1' 
-var storageAccountName = 'testmanmadhan'
+var storageAccountName = 'madhantestctg'
 var functionWorkerRuntime = runtime
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
-  name: 'storageAccountName'
+  name: storageAccountName
   location: location
   sku: {
     name: storageAccountType
   }
   kind: 'Storage'
 }
-
 resource hostingPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
-  name: 'hostingPlanName'
+  name:'ctgfunapp'
   location: location
   sku: {
     name: 'Y1'
@@ -40,11 +39,15 @@ resource hostingPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
 }
 
 resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
-  name: 'functionAppName'
+  name: functionAppName
   location: location
   kind: 'functionapp'
   identity: {
     type: 'SystemAssigned'
+  }
+  tags:{
+    tagname1: 'created by madhan'
+    tagname2: 'owener of funapp'
   }
   properties: {
     serverFarmId: hostingPlan.id
@@ -71,10 +74,6 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
           value: '~14'
         }
         {
-          name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
-          value: applicationInsights.properties.InstrumentationKey
-        }
-        {
           name: 'FUNCTIONS_WORKER_RUNTIME'
           value: functionWorkerRuntime
         }
@@ -83,15 +82,5 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
       minTlsVersion: '1.2'
     }
     httpsOnly: true
-  }
-}
-
-resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
-  name: 'applicationInsightsName'
-  location: location
-  kind: 'web'
-  properties: {
-    Application_Type: 'web'
-    Request_Source: 'rest'
   }
 }
