@@ -36,6 +36,10 @@ resource hostingPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
     tier: 'Dynamic'
   }
   properties: {}
+  tags:{
+    tagname: 'created by madhan'
+    tagname1: 'owner is manmadhanm'
+  }
 }
 
 resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
@@ -44,10 +48,6 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
   kind: 'functionapp'
   identity: {
     type: 'SystemAssigned'
-  }
-  tags:{
-    tagname1: 'created by madhan'
-    tagname2: 'owener of funapp'
   }
   properties: {
     serverFarmId: hostingPlan.id
